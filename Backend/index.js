@@ -2,6 +2,8 @@ import express from "express"
 import dotenv from "dotenv"
 import mongoose from "mongoose"
 import bookRoute from "./route/book.route.js"
+import userRoute from "./route/user.route.js"
+import cors from "cors"
 
 
 // const express = require('express')
@@ -11,6 +13,9 @@ import bookRoute from "./route/book.route.js"
 
 const app = express()
 
+app.use(cors()) //middleware
+app.use(express.json()) //parse incomming data into json
+
 dotenv.config()
 //above two lines of code are for importing and congiguring  the .env file in nodejs
 const PORT = process.env.PORT || 4000;  //this line of code will run only if dotenv npm is installed, imported and configured
@@ -19,7 +24,7 @@ const URI = process.env.MongoDBURI;
 
 //connect to mongodb
 try {
-  mongoose.connect(URI,{
+  mongoose.connect(URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   });
@@ -31,6 +36,7 @@ try {
 //defining routes
 
 app.use("/book", bookRoute)
+app.use("/user", userRoute)
 
 app.get('/', (req, res) => {
   res.send('Hello User!')
