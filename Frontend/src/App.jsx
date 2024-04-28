@@ -3,6 +3,7 @@ import Home from "./Home/Home"
 import { Route, Routes } from "react-router-dom"
 import Courses from "./Courses/Courses";
 import SignUp from "./components/SignUp"
+import { Toaster } from 'react-hot-toast';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
 <Route path="/SignUp" element={<SignUp />}></Route>
 
 </Routes>
+<Toaster/>
 </div>
     
   );
