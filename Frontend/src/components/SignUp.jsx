@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import Login from "./Login"
 import { useForm } from "react-hook-form";
 import axios from "axios"
@@ -7,6 +7,10 @@ import { toast } from 'react-hot-toast';
 
 
 export default function SignUp() {
+
+    const location = useLocation();
+    const navigate = useNavigate();
+    const from = location.state?.from?.pathname || "/";
 
     const {
         register,
@@ -26,6 +30,7 @@ export default function SignUp() {
                 console.log(res.data)
                 if (res.data) {
                     toast.success('Signup successfully');
+                    navigate(from, {replace: true});
                 }
                 localStorage.setItem("users", JSON.stringify(res.data.user));
             }).catch((err) => {
@@ -43,7 +48,7 @@ export default function SignUp() {
         <div >
             <div className="flex h-screen items-center justify-center">
                 <div className="modal-box dark:bg-slate-600 dark:text-white">
-                    <form method="dialog" onSubmit={handleSubmit(onSubmit)}>
+                    <form method="" onSubmit={handleSubmit(onSubmit)}>
                         {/* if there is a button in form, it will close the modal */}
                         <Link to={"/"} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                             ✕

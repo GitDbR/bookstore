@@ -26,13 +26,20 @@ export default function Login() {
                 if (res.data) {
                     
                     toast.success('Login successfully');
+                    document.getElementById("my_modal_3").close();
+
+                    setTimeout(()=>{
+                    window.location.reload();
+                    localStorage.setItem("users", JSON.stringify(res.data.user));
+                    },1000)
+
                 }
-                localStorage.setItem("users", JSON.stringify(res.data.user));
             }).catch((err) => {
                 if (err.response) {
                     console.log(err);
                     
                     toast.error("Error: " + err.response.data.message);
+                    setTimeout(()=>{},2000)
                 }
             })
     }
@@ -45,7 +52,9 @@ export default function Login() {
                 <div className="modal-box dark:bg-slate-600 dark:text-white">
                     <form method="dialog" onSubmit={handleSubmit(onSubmit)}>
                         {/* if there is a button in form, it will close the modal */}
-                        <Link to="/" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                        <Link to="/" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" 
+                        onClick={() => document.getElementById("my_modal_3").close()}>
+                            
                             ✕
                         </Link>
 

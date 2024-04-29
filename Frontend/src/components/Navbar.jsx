@@ -1,9 +1,14 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import Login from "./Login";
+import Logout from './Logout';
+import {useAuth} from "../context/AuthProvider";
+import { toast } from 'react-hot-toast';
 
 
 function Navbar() {
+
+    const [authUser, setAuthUser] = useAuth()
 
     const [theme, setTheme] = useState(localStorage.getItem('theme') ? localStorage.getItem('theme') : "light");
 
@@ -90,18 +95,20 @@ function Navbar() {
 
                         </label>
                     </div>
-                    <div className="">
-                        <a className="bg-black text-white py-2 px-3 rounded-md cursor-pointer" onClick={() => 
-                            document.getElementById("my_modal_3").showModal()
-                        }
-                        >
-                            Login
-                            </a>
 
-                    </div>
-                <Login/>
+                    {
+                        authUser ? (<Logout />) : (<div className="">
+                            <a className="bg-black text-white py-2 px-3 rounded-md cursor-pointer" onClick={() =>
+                                document.getElementById("my_modal_3").showModal()
+                            }
+                            >
+                                Login
+                            </a>
+                            <Login />
+                        </div>)
+                    }
+                </div>
             </div>
-        </div>
         </div >
     );
 }
